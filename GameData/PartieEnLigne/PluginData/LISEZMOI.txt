@@ -1,0 +1,117 @@
+PARTIE EN LIGNE - KSP 2 dans KSP 1
+==================================
+
+Le principe
+-----------
+La partie tourne sur le PC d'un des joueurs : l'hote. Les autres le rejoignent.
+Quand l'hote ferme le jeu, l'univers part tout seul sur un depot GitHub prive.
+Le joueur suivant clique sur « Heberger et jouer » : il recupere l'univers et devient l'hote.
+Un seul hote a la fois : tant que quelqu'un heberge, les autres voient « Rejoindre ».
+
+Tout se fait dans la fenetre « Partie en ligne » du menu principal du jeu.
+
+
+A faire une seule fois, par un joueur (le chef de la partie)
+-----------------------------------------------------------
+1. Sur github.com, creer un compte si besoin, puis un depot PRIVE (exemple : partie-ksp), en cochant « Add a README file ».
+2. Creer un jeton limite a ce depot :
+   Settings > Developer settings > Personal access tokens > Fine-grained tokens > Generate new token.
+   - Repository access : Only select repositories, choisir le depot de la partie.
+   - Permissions : Contents = Read and write. Rien d'autre.
+   - Une date d'expiration (un an, par exemple).
+3. Donner aux autres joueurs, en prive, le nom du depot et le jeton.
+   Le jeton ouvre ce depot seulement : il ne donne acces a rien d'autre du compte.
+
+
+A faire par chaque joueur
+-------------------------
+1. Lancer le jeu. Au menu principal, dans la fenetre « Partie en ligne », cliquer « Regler la partie ».
+2. Remplir :
+     - le depot : COMPTE/partie-ksp (ou son adresse github.com, copiee-collee) ;
+     - le jeton : le copier, puis bouton « Coller » (ou Ctrl+V dans la case) ;
+     - le mot de passe de la partie (le meme pour tous, ou vide) ;
+     - ton adresse, seulement si tu veux heberger (voir plus bas).
+3. « Enregistrer et verifier » : la fenetre dit tout de suite qui heberge, ou ce qui ne va pas
+   (jeton refuse, depot introuvable, jeton sans le droit d'ecrire...).
+Les reglages sont gardes dans PluginData/reglages.cfg (on peut aussi l'ouvrir avec le Bloc-notes).
+Le bouton « Reglages de la partie » permet de les changer plus tard.
+
+
+Pour heberger : que les autres puissent te joindre
+-------------------------------------------------
+Les autres doivent pouvoir atteindre ton PC sur le port 8800 (UDP). Trois facons, au choix :
+ - un reseau prive entre amis (Tailscale, ZeroTier, Radmin VPN...) : tout le monde l'installe,
+   et ton adresse est celle que ce programme te donne (exemple : adresse = 100.64.12.34:8800) ;
+ - ta box ouvre le port toute seule : cocher « UPnP » dans les reglages (toutes les box ne le font pas) ;
+   ton adresse est alors ton adresse publique ;
+ - ouvrir le port 8800 UDP a la main dans les reglages de ta box, vers ton PC.
+La premiere fois que tu heberges, Windows demande si le serveur peut utiliser le reseau : repondre Autoriser.
+
+
+La partie
+---------
+ - La partie se joue en carriere.
+ - L'admin de la partie est le premier joueur qui la regle (normalement celui qui a cree le depot). Lui seul voit le
+   bouton « Supprimer la partie », avec une confirmation ; personne ne doit heberger a ce moment-la. GitHub garde une
+   copie de l'ancienne partie dans l'historique du depot. Le prochain hote commence une nouvelle partie.
+
+
+Diplomatie
+----------
+ - Les autres joueurs ne voient pas tes vehicules et ne peuvent pas les piloter, sauf si tu le permets.
+ - Bouton « Diplomatie » (deux cercles) dans la barre d'applications, en jeu : pour chaque joueur, « voit mes vehicules »
+   et « les pilote ». Retirer l'accord fait disparaitre tes vehicules chez lui.
+
+
+Ton KSC et tes colonies
+-----------------------
+ - Chaque joueur a son propre KSC sur Kerbin. Le premier garde celui d'origine ; les suivants recoivent un site plat,
+   choisi par le serveur, et le retrouvent a chaque connexion.
+ - Les KSC des autres joueurs sont visibles a leur place, sur leur terrain aplati : ce sont des decors (on s'y pose,
+   on ne peut pas y entrer ni lancer depuis). Le KSC d'un nouveau joueur apparait au prochain passage au centre spatial.
+ - A cote de chaque KSC, une zone d'essai du minage (anneau jaune) : on peut y creuser pour apprendre, sans rien gagner.
+   Ailleurs, Kerbin ne se creuse pas.
+ - Fonder une colonie : vaisseau pose et immobile, hors de Kerbin, avec sa cargaison de depart ; clic droit sur une piece
+   de commande, « Fonder une colonie ici ».
+ - Station de pistage : le bouton « Colonies » (une petite ville) liste tes colonies et passe en vue colonie.
+
+
+Le marche de Kerbin
+-------------------
+ - Kerbin n'achete que ce qui y est rare : helium-3, metaux rares (platine), or, mineraux exotiques, exotiques raffines.
+ - Bouton « Marche » (une piece d'or) dans la barre d'applications : les cours du moment. Pose un vaisseau a moins de 5 km
+   de ton KSC, ouvre le marche, « Tout vendre » : la caisse de la partie est creditee.
+ - Un seul marche pour toute la partie : plus on vend une matiere, plus son cours baisse ; il remonte de moitie en 30 jours.
+ - Les prix se reglent sans programme : Universe/Marche/prix.txt dans l'univers de la partie (fonds par tonne, tonnes
+   qui divisent le prix par deux, demi-vie en jours de Kerbin).
+
+
+Budget et contrats
+------------------
+ - Budget de l'agence, verse chaque jour de Kerbin du present a la caisse de la partie : 100 fonds par jour au depart,
+   +300 par niveau d'amelioration des batiments du KSC (2 800 par jour KSC entierement ameliore). Les jours ou personne
+   ne joue sont payes a la connexion suivante.
+ - Les contrats de touristes et de sauvetage, que LMP retirait, sont proposes en partie en ligne comme les autres.
+
+
+Le temps de la partie
+---------------------
+ - Le present de la partie avance en temps reel. Chacun peut accelerer et prendre de l'avance, jusqu'a 3 ans de Kerbin
+   devant le present ; ce que tu fais en avance n'apparait chez les autres que quand leur temps arrive a ce moment.
+ - Un vaisseau que tu as touche en avance reste verrouille pour les autres jusqu'a ce que leur temps le rattrape.
+ - Si tu quittes avec de l'avance, elle est gardee pour ton retour. Sinon tu reviens au present. Personne ne recule.
+ - Faire avancer le present pour tout le monde, dans le chat du jeu :
+     !avance 6h   (ou 2j, 1a : heures, jours, annees de Kerbin) propose l'avance ;
+     !oui ou !non  chaque joueur connecte repond ;
+     !lancer       quand tout le monde a dit oui, l'hote (l'admin) lance l'avance ;
+     !present      donne l'heure du present et l'avance de chaque joueur.
+   Pour donner le droit de !lancer a d'autres joueurs : leurs noms dans Universe/TempsDiffere/admins.txt de l'univers.
+
+
+Bon a savoir
+------------
+ - L'univers est copie sur le depot toutes les 5 minutes, et a la fin de l'hebergement.
+ - Si le PC de l'hote plante, sa place se libere au bout de 3 minutes, avec l'univers de la derniere copie.
+ - Fermer le jeu suffit pour rendre la main : l'envoi continue quelques secondes apres la fermeture.
+ - Le bouton « Arreter d'heberger » rend la main sans quitter le jeu (les autres sont deconnectes).
+ - Journal du relais : relais.log ; journal du serveur : serveur.log (dans ce dossier).
